@@ -173,7 +173,7 @@ pipeline {
                     def downloadUrl = sh(script: """echo '${response}' | jq -r '.signed_url'""", returnStdout: true).trim()
 
                     sh """
-                        echo '${downloadUrl}'
+                        echo 'hello world ${downloadUrl}'
                         curl -o cortexcli '${downloadUrl}'
                         chmod +x cortexcli
                         ./cortexcli --version
