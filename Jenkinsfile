@@ -76,6 +76,12 @@ pipeline {
     agent none
     options { timestamps(); timeout(time: 15, unit: 'MINUTES') }
 
+    environment {
+        CORTEX_API_KEY = credentials('CORTEX_API_KEY')
+        CORTEX_API_KEY_ID = credentials('CORTEX_API_KEY_ID')
+        CORTEX_API_URL = 'https://api-bismillah-ecip.xdr.us.paloaltonetworks.com'
+    }
+
     stages {
         stage('Info') {
             agent any
@@ -107,24 +113,19 @@ pipeline {
         stage('Run Scan') {
             agent any
             steps {
-                withCredentials([
-                    string(credentialsId: 'CORTEX_API_KEY',    variable: 'CORTEX_API_KEY'),
-                    string(credentialsId: 'CORTEX_API_KEY_ID', variable: 'CORTEX_API_KEY_ID')
-                ]) {
-                    sh '''
-                        set +x
-                        id
-                        /var/jenkins_home/tools/cortex/cortexcli \
-                          --api-base-url "https://api-bismillah-ecip.xdr.us.paloaltonetworks.com" \
-                          --api-key "$CORTEX_API_KEY" \
-                          --api-key-id "$CORTEX_API_KEY_ID" \
-                          code scan \
-                          --directory "$(pwd)" \
-                          --repo-id gifaralansharwork/appsec-cortex \
-                          --branch main \
-                          --source JENKINS \
-                          --repo-url https://github.com/gifaralansharwork/appsec-cortex
-                    '''
+                script{
+                    sh """
+                    ./cortexcli \
+                      --api-base-url "${env.CORTEX_API_URL}" \
+                      --api-key "${env.CORTEX_API_KEY}" \
+                      --api-key-id "${env.CORTEX_API_KEY_ID}" \
+                      code scan \
+                      --directory "\$(pwd)" \
+                      --repo-id gifaralansharwork/appsec-cortex \
+                      --branch main \
+                      --source "JENKINS" \
+                      --repo-url https://github.com/gifaralansharwork/appsec-cortex
+                    """
                 }
             }
         }
