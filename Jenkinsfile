@@ -117,6 +117,8 @@ pipeline {
                     sh """
                     whoami
                     pwd
+                    cp /var/jenkins_home/tools/cortex/cortexcli ./cortexcli
+                    chmod 755 ./cortexcli
                     ./cortexcli --version
                     """
                 }
