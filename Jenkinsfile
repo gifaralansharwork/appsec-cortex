@@ -150,44 +150,19 @@ pipeline {
                 }
             }
         }
+
+        stage('Checkout Repository') {
+            steps{
+                git branch: 'main', url: 'https://github.com/gifaralansharwork/appsec-cortex'
+                stash includes: '**/*', name: 'source'
+            }
+        }
         
-        // stage('Install Dependencies') {
-        //     steps {
-        //         sh '''
-        //         apt update
-        //         apt install -y curl jq git
-        //         '''
-        //     }
-        // }
-
-        // stage('Download cortexcli') {
-        //     steps {
-        //         script {
-        //             def response = sh(script: """
-        //                 curl --location '${env.CORTEX_API_URL}/public_api/v1/unified-cli/releases/download-link?os=linux&architecture=amd64' \
-        //                   --header 'Authorization: ${env.CORTEX_API_KEY}' \
-        //                   --header 'x-xdr-auth-id: ${env.CORTEX_API_KEY_ID}' \
-        //                   --silent
-        //             """, returnStdout: true).trim()
-
-        //             def downloadUrl = sh(script: """echo '${response}' | jq -r '.signed_url'""", returnStdout: true).trim()
-
-        //             sh """
-        //                 echo '${downloadUrl}'
-        //                 curl -o cortexcli '${downloadUrl}'
-        //                 chmod +x cortexcli
-        //                 ./cortexcli --version
-        //             """
-        //         }
-        //     }
-        // }
-
         stage('Run Scan') {
         // Replace the repo-id with your repository like: owner/repo
             steps {
                 script {
                     // unstash 'source'
-
                     sh """
                     ./cortexcli \
                       --api-base-url "${env.CORTEX_API_URL}" \
@@ -196,9 +171,9 @@ pipeline {
                       code scan \
                       --directory "\$(pwd)" \
                       --repo-id <REPLACE WITH REPO_OWNER/REPO_NAME> \
-                      --branch <REPLACE WITH BRANCH> \
+                      --branch main \
                       --source "JENKINS" \
-                      --repo-url <REPLACE WITH REPO_URL>
+                      --repo-url https://github.com/gifaralansharwork/appsec-cortex
                     """
                 }
             }
