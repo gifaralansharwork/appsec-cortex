@@ -186,7 +186,7 @@ pipeline {
         // Replace the repo-id with your repository like: owner/repo
             steps {
                 script {
-                    unstash 'source'
+                    // unstash 'source'
 
                     sh """
                     ./cortexcli \
