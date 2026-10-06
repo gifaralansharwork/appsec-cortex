@@ -3,7 +3,7 @@ pipeline {
     options { timestamps(); timeout(time: 15, unit: 'MINUTES') }
 
     environment {
-        CORTEX_API_KEY = 'wPNdUcYCdoLB7lDKtMN4Gy8VfC0Jjlz7wklC8nizbGJaf4OSXDw5pgq2ta3erONOnpwCGVioSYcthQTjplpZSv0Myj9DLqwR2X19rfDrqak3daICCIgRBxo74ezk5e24'
+        CORTEX_API_KEY =  credentials('CORTEX_API_KEY')
         CORTEX_API_KEY_ID = credentials('CORTEX_API_KEY_ID')
         CORTEX_API_URL = 'https://api-bismillah-ecip.xdr.us.paloaltonetworks.com'
     }
