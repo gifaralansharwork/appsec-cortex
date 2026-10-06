@@ -22,6 +22,7 @@ pipeline{
                     . .venv/bin/activate
                     pip install --quiet pytest
                     pytest -v --junitxml=results.xml
+                    sh 'ls -la && git ls-files'
                 '''
             }
             post {
