@@ -116,7 +116,7 @@ pipeline {
                 script{
                     sh """
                     whoami
-                    
+                    pwd
                     """
                 }
             }
