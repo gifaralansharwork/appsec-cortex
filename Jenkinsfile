@@ -170,7 +170,7 @@ pipeline {
                       --api-key-id "${env.CORTEX_API_KEY_ID}" \
                       code scan \
                       --directory "\$(pwd)" \
-                      --repo-id <REPLACE WITH REPO_OWNER/REPO_NAME> \
+                      --repo-id gifaralansharwork/appsec-cortex \
                       --branch main \
                       --source "JENKINS" \
                       --repo-url https://github.com/gifaralansharwork/appsec-cortex
