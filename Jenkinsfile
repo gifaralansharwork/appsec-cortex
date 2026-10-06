@@ -117,6 +117,7 @@ pipeline {
                     sh """
                     whoami
                     pwd
+                    ./cortexcli --version
                     """
                 }
             }
