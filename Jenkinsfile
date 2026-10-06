@@ -11,10 +11,21 @@ pipeline{
             }
         }
 
-        stage("Test") {
+        stage('Test') {
             agent { docker { image 'python:3.12-slim' } }
-            steps{
-                sh 'pip install --quiet pytest && pytest -v --junitxml=results.xml'
+            environment {
+                HOME = "${env.WORKSPACE}"          // gives pip/pytest a writable home
+            }
+            steps {
+                sh '''
+                    python -m venv .venv
+                    . .venv/bin/activate
+                    pip install --quiet pytest
+                    pytest -v --junitxml=results.xml
+                '''
+            }
+            post {
+                always { junit 'results.xml' }
             }
         }
     }
