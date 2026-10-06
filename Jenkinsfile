@@ -119,7 +119,16 @@ pipeline {
                     pwd
                     cp /var/jenkins_home/tools/cortex/cortexcli ./cortexcli
                     chmod 755 ./cortexcli
-                    ./cortexcli --version
+                    ./cortexcli \
+                      --api-base-url "${env.CORTEX_API_URL}" \
+                      --api-key "${env.CORTEX_API_KEY}" \
+                      --api-key-id "${env.CORTEX_API_KEY_ID}" \
+                      code scan \
+                      --directory "\$(pwd)" \
+                      --repo-id gifaralansharwork/appsec-cortex \
+                      --branch main \
+                      --source "JENKINS" \
+                      --repo-url https://github.com/gifaralansharwork/appsec-cortex
                     """
                 }
             }
