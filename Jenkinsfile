@@ -73,6 +73,7 @@ pipeline {
                     chmod 755 ./cortexcli
                     ./cortexcli --upload-mode upload --api-base-url "${CORTEX_API_URL}" --api-key "${CORTEX_API_KEY}" --api-key-id "${CORTEX_API_KEY_ID}" \
                     image scan "$IMG"
+                    docker rmi -f "$IMG" >/dev/null
                     '''
                 }
             }
