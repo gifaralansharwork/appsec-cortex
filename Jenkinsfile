@@ -36,29 +36,29 @@ pipeline {
             }
         }
 
-        stage('Run Scan') {
-            agent any
-            steps {
-                script{
-                    sh """
-                    whoami
-                    pwd
-                    cp /var/jenkins_home/tools/cortex/cortexcli ./cortexcli
-                    chmod 755 ./cortexcli
-                    ./cortexcli \
-                      --api-base-url "${env.CORTEX_API_URL}" \
-                      --api-key "${env.CORTEX_API_KEY}" \
-                      --api-key-id "${env.CORTEX_API_KEY_ID}" \
-                      code scan \
-                      --directory "\$(pwd)" \
-                      --repo-id gifaralansharwork/appsec-cortex \
-                      --branch main \
-                      --source "JENKINS" \
-                      --repo-url https://github.com/gifaralansharwork/appsec-cortex
-                    """
-                }
-            }
-        }
+        // stage('Run Scan') {
+        //     agent any
+        //     steps {
+        //         script{
+        //             sh """
+        //             whoami
+        //             pwd
+        //             cp /var/jenkins_home/tools/cortex/cortexcli ./cortexcli
+        //             chmod 755 ./cortexcli
+        //             ./cortexcli \
+        //               --api-base-url "${env.CORTEX_API_URL}" \
+        //               --api-key "${env.CORTEX_API_KEY}" \
+        //               --api-key-id "${env.CORTEX_API_KEY_ID}" \
+        //               code scan \
+        //               --directory "\$(pwd)" \
+        //               --repo-id gifaralansharwork/appsec-cortex \
+        //               --branch main \
+        //               --source "JENKINS" \
+        //               --repo-url https://github.com/gifaralansharwork/appsec-cortex
+        //             """
+        //         }
+        //     }
+        // }
 
         stage('Image Scan') {
             agent any
@@ -72,8 +72,7 @@ pipeline {
                     cp /var/jenkins_home/tools/cortex/cortexcli ./cortexcli
                     chmod 755 ./cortexcli
                     ./cortexcli --upload-mode upload --api-base-url "${CORTEX_API_URL}" --api-key "${CORTEX_API_KEY}" --api-key-id "${CORTEX_API_KEY_ID}" \
-                    image scan base-test:63
-                    
+                    image scan base-test:69
                     '''
                 }
             }
