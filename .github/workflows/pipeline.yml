@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: pip install pytest
       - name: Run tests
-        run: python -m pytest tests/
+        run: python -m pytest .
 
   cortex-code-scan:
     needs: build
