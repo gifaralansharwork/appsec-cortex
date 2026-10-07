@@ -59,5 +59,17 @@ pipeline {
                 }
             }
         }
+
+        stage('Image Scan') {
+            agent any
+            steps {
+                script{
+                    sh"""
+                    whoami
+                    pwd
+                    """
+                }
+            }
+        }
     }
 }
