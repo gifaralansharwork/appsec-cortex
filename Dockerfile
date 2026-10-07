@@ -1,2 +1,2 @@
-FROM alpine:3.14
+FROM alpine:latest
 RUN echo "old base image" > /info.txt
